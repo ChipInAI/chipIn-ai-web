@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-const clientInstance = axios.create({ baseURL: process.env.BASE_URL });
+const clientInstance = axios.create({
+  baseURL: 'https://chipinai-backend.onrender.com',
+});
 
 const getClient = () => clientInstance;
 

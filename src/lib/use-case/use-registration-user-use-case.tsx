@@ -1,7 +1,8 @@
+import { setCookie } from 'nookies';
+
 import useRegisterUserMutation from '@/lib/service/mutation/use-register-user-mutation';
 
 import { RegistrationBody } from '../api/auth/types/registration';
-import { setApplicationCookie } from '../utils';
 
 const useRegistrationUserUseCase = (
   onSuccess?: () => void,
@@ -15,7 +16,7 @@ const useRegistrationUserUseCase = (
 
       onSuccess?.();
 
-      setApplicationCookie('jwtToken', data.jwtToken, {
+      setCookie(null, 'jwtToken', data.jwtToken, {
         maxAge: 30 * 24 * 60 * 60,
         path: '/',
       });

@@ -36,10 +36,6 @@ const data = {
       name: 'Reccomendations',
       link: '/reccomendations',
     },
-    {
-      name: 'Analytics',
-      link: '/analytics',
-    },
   ],
 };
 
