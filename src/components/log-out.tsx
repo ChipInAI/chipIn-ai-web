@@ -8,6 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
+import useLogoutUserUseCase from '@/lib/use-case/use-logout-user-use-case';
 
 export function LogOut({
   isOpen,
@@ -16,6 +17,8 @@ export function LogOut({
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
 }) {
+  const logout = useLogoutUserUseCase({ onSuccess: () => setIsOpen(false) });
+
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent className="sm:max-w-md">
@@ -26,7 +29,9 @@ export function LogOut({
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <Button type="button">Log out</Button>
+          <Button type="button" onClick={logout}>
+            Log out
+          </Button>
           <DialogClose asChild>
             <Button type="button" variant="secondary">
               Cancel
