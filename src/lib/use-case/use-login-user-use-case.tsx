@@ -16,7 +16,7 @@ const useLoginUserUseCase = (
 
       onSuccess?.();
 
-      setCookie(null, 'jwtToken', data.jwt_token, {
+      setCookie(null, 'jwtToken', data.jwtToken, {
         maxAge: 30 * 24 * 60 * 60,
         path: '/',
       });

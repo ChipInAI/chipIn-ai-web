@@ -8,12 +8,6 @@ type RegistrationBody = {
 type RegistrationResponse = {
   message: string;
   jwtToken: string;
-  userData: {
-    id: string;
-    username: string;
-    email: string;
-    createdAt: string;
-  };
 };
 
 export type { RegistrationBody, RegistrationResponse };

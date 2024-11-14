@@ -5,12 +5,7 @@ type LoginBody = {
 
 type LoginResponse = {
   message: string;
-  jwt_token: string;
-  user_data: {
-    id: string;
-    username: string;
-    email: string;
-  };
+  jwtToken: string;
 };
 
 export type { LoginBody, LoginResponse };

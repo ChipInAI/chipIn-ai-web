@@ -48,6 +48,7 @@ export function RegisterForm({
 
   const onSubmit = async (data: {
     email: string;
+    firstName: string;
     password: string;
     confirmPassword: string;
   }) => {
