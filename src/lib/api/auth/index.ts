@@ -1,4 +1,4 @@
-import { parseCookies } from 'nookies';
+import Cookies from 'js-cookie';
 
 import { client } from '../instance';
 
@@ -35,8 +35,9 @@ const AuthAPI = {
   },
 
   logout: async () => {
+    const accessToken = Cookies.get('access_token');
     const response = await client.get('/logout', {
-      headers: { 'x-access-token': parseCookies().jwtToken },
+      headers: { 'x-access-token': accessToken },
     });
     return response.data;
   },

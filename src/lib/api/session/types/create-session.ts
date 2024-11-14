@@ -1,6 +1,6 @@
 type CreateSessionBody = {
-  restaurantName: string;
-  restaurantDetails: string[];
+  restaurant_name: string;
+  restaurant_details: string[];
   receipt: string[];
 };
 
@@ -17,7 +17,7 @@ type CreateSessionResponse = {
     status: string;
     participants: string[];
   };
-  restaurantDetails: string[];
+  restaurant_details: string[];
 };
 
 export type { CreateSessionBody, CreateSessionResponse };

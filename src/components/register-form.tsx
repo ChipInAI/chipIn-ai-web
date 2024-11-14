@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { useToast } from '@/hooks/use-toast';
 import useRegistrationUserUseCase from '@/lib/use-case/use-registration-user-use-case';
 
 const registerSchema = z
@@ -35,7 +36,19 @@ export function RegisterForm({
 }: {
   handleModalChange: () => void;
 }) {
-  const { registerUser, isLoading } = useRegistrationUserUseCase();
+  const { toast } = useToast();
+
+  const { registerUser, isLoading } = useRegistrationUserUseCase({
+    onSuccess: () => {
+      handleModalChange();
+    },
+    onError: error => {
+      toast({
+        title: 'Error',
+        description: `${error}`,
+      });
+    },
+  });
 
   const { register, handleSubmit } = useForm<{
     email: string;

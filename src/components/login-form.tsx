@@ -2,7 +2,6 @@
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import Link from 'next/link';
 import { z } from 'zod';
 
 import { Button } from '@/components/ui/button';
@@ -27,7 +26,7 @@ export function LoginForm({
 }: {
   handleModalChange: () => void;
 }) {
-  const { loginUser, isLoading } = useLoginUserUseCase();
+  const { loginUser, isLoading } = useLoginUserUseCase({});
 
   const { register, handleSubmit } = useForm<{
     email: string;
@@ -61,15 +60,6 @@ export function LoginForm({
               />
             </div>
             <div className="grid gap-2">
-              <div className="flex items-center">
-                <Label htmlFor="password">Password</Label>
-                <Link
-                  href="#"
-                  className="ml-auto inline-block text-sm underline"
-                >
-                  Forgot your password?
-                </Link>
-              </div>
               <Input id="password" type="password" {...register('password')} />
             </div>
             <Button type="submit" className="w-full" disabled={isLoading}>

@@ -3,7 +3,7 @@ import { AxiosError } from 'axios';
 
 import { UserAPI } from '@/lib/api/user';
 
-const useGetUserDataQuery = ({
+const useGetUserSessionQuery = ({
   enabled,
   onSuccess,
   onError,
@@ -13,10 +13,10 @@ const useGetUserDataQuery = ({
   onError?: (error: AxiosError) => void;
 }) => {
   return useQuery({
-    queryKey: ['user, user-data'],
+    queryKey: ['user, home-page'],
     queryFn: async () => {
       try {
-        const data = await UserAPI.getUserData();
+        const data = await UserAPI.getHomePageData();
 
         onSuccess?.();
 
@@ -33,4 +33,4 @@ const useGetUserDataQuery = ({
   });
 };
 
-export default useGetUserDataQuery;
+export default useGetUserSessionQuery;

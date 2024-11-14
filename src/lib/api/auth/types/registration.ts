@@ -7,7 +7,7 @@ type RegistrationBody = {
 
 type RegistrationResponse = {
   message: string;
-  jwtToken: string;
+  jwt_token: string;
 };
 
 export type { RegistrationBody, RegistrationResponse };

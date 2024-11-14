@@ -13,6 +13,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from '@/components/ui/sidebar';
+import { Toaster } from '@/components/ui/toaster';
 import ReactQueryProvider from '@/providers/react-query';
 
 import './globals.css';
@@ -48,6 +49,7 @@ export default function RootLayout({
               {children}
             </SidebarInset>
           </SidebarProvider>
+          <Toaster />
         </ReactQueryProvider>
       </body>
     </html>

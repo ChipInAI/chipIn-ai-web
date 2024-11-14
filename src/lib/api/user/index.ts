@@ -1,4 +1,4 @@
-import { parseCookies } from 'nookies';
+import Cookies from 'js-cookie';
 
 import { client } from '../instance';
 
@@ -13,22 +13,25 @@ const UserAPI = {
   updateUserSettings: async (
     updateUserSettingsData: UpdateUserSettingsBody,
   ): Promise<UpdateUserSettingsResponse> => {
+    const accessToken = Cookies.get('access_token');
     const response = await client.put('/settings', updateUserSettingsData, {
-      headers: { 'x-access-token': parseCookies().jwtToken },
+      headers: { 'x-access-token': accessToken },
     });
     return response.data;
   },
 
   getHomePageData: async (): Promise<HomePageData> => {
+    const accessToken = Cookies.get('access_token');
     const response = await client.get('/', {
-      headers: { 'x-access-token': parseCookies().jwtToken },
+      headers: { 'x-access-token': accessToken },
     });
     return response.data;
   },
 
   getUserData: async (): Promise<UserDataResponse> => {
+    const accessToken = Cookies.get('access_token');
     const response = await client.get('/profile', {
-      headers: { 'x-access-token': parseCookies().jwtToken },
+      headers: { 'x-access-token': accessToken },
     });
     return response.data;
   },

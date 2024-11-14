@@ -5,7 +5,7 @@ type LoginBody = {
 
 type LoginResponse = {
   message: string;
-  jwtToken: string;
+  jwt_token: string;
 };
 
 export type { LoginBody, LoginResponse };
