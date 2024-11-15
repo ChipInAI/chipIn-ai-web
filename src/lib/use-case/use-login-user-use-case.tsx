@@ -22,7 +22,9 @@ const useLoginUserUseCase = ({
 
       onSuccess?.();
 
-      queryClient.invalidateQueries({ queryKey: ['user'] });
+      await queryClient.invalidateQueries({ queryKey: ['user, user-data'] });
+
+      await queryClient.invalidateQueries({ queryKey: ['user, home-page'] });
     } catch (error) {
       onError?.(error);
     }

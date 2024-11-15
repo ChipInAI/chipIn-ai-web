@@ -12,6 +12,8 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
+import { useToast } from '@/hooks/use-toast';
+import useCreateSessionUseCase from '@/lib/use-case/use-create-session-use-case';
 
 export function CreateSession({
   isOpen,
@@ -20,14 +22,32 @@ export function CreateSession({
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
 }) {
-  const [file, setFile] = useState<string | undefined>(undefined);
+  const [file, setFile] = useState<File | undefined>(undefined);
+  const { toast } = useToast();
+  const { createSession, isLoading } = useCreateSessionUseCase({
+    onSuccess: () => {
+      setIsOpen(false);
+    },
+    onError: error => {
+      toast({
+        title: 'Error',
+        description: 'Error creating session',
+        variant: 'destructive',
+      });
+    },
+  });
+
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.files && e.target.files[0]) {
-      setFile(URL.createObjectURL(e.target.files[0]));
+      setFile(e.target.files[0]);
     }
   }
 
-  console.log(file);
+  const handleStartSession = async () => {
+    if (file) {
+      await createSession(file);
+    }
+  };
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -47,7 +67,13 @@ export function CreateSession({
               className="hidden"
             />
           </div>
-          {file && <img src={file} alt="bill" className="w-full" />}
+          {file && (
+            <img
+              src={URL.createObjectURL(file)}
+              alt="bill"
+              className="w-full"
+            />
+          )}
         </div>
         <DialogFooter className="flex gap-2 my-2">
           <Button
@@ -57,7 +83,11 @@ export function CreateSession({
           >
             Upload Photo
           </Button>
-          <Button className="flex-1" disabled={!file}>
+          <Button
+            className="flex-1"
+            onClick={handleStartSession}
+            disabled={!file || isLoading} // Disable if no file or loading
+          >
             Start Session
           </Button>
         </DialogFooter>

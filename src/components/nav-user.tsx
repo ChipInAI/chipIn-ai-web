@@ -1,96 +1,54 @@
 'use client';
 
-import { useState } from 'react';
-import { BadgeCheck, ChevronsUpDown, LogOut as LogOutIcon } from 'lucide-react';
-import Link from 'next/link';
-
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import {
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  useSidebar,
-} from '@/components/ui/sidebar';
-import { UserDataResponse } from '@/lib/api/user/types/user-data';
+import useGetUserDataQuery from '@/lib/service/query/use-get-user-query';
+import useLogoutUserUseCase from '@/lib/use-case/use-logout-user-use-case';
 
-import { LogOut } from './log-out';
+import { Skeleton } from './ui/skeleton';
+import AuthModal from './auth-modal';
 
-export function NavUser({ user }: { user: UserDataResponse }) {
-  const { isMobile } = useSidebar();
-  const [isLogOutOpen, setIsLogOutOpen] = useState(false);
+export function NavUser() {
+  const { data, isLoading } = useGetUserDataQuery({ enabled: true });
+  const logout = useLogoutUserUseCase({});
+
+  const user = data?.user;
+
+  if (isLoading) return <Skeleton className="h-9 w-9 rounded-full" />;
+
+  if (!user) return <AuthModal />;
 
   return (
-    <>
-      <SidebarMenu>
-        <SidebarMenuItem>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <SidebarMenuButton
-                size="lg"
-                className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
-              >
-                <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarFallback className="rounded-lg">
-                    {user.user.firstName[0]}
-                  </AvatarFallback>
-                </Avatar>
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">
-                    {user.user.firstName}
-                  </span>
-                  <span className="truncate text-xs">{user.user.email}</span>
-                </div>
-                <ChevronsUpDown className="ml-auto size-4" />
-              </SidebarMenuButton>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent
-              className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
-              side={isMobile ? 'bottom' : 'right'}
-              align="start"
-              sideOffset={4}
-            >
-              <DropdownMenuLabel className="p-0 font-normal">
-                <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                  <Avatar className="h-8 w-8 rounded-lg">
-                    <AvatarFallback className="rounded-lg">
-                      {user.user.firstName[0]}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div className="grid flex-1 text-left text-sm leading-tight">
-                    <span className="truncate font-semibold">
-                      {user.user.firstName}
-                    </span>
-                    <span className="truncate text-xs">{user.user.email}</span>
-                  </div>
-                </div>
-              </DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuGroup>
-                <Link href="/account">
-                  <DropdownMenuItem>
-                    <BadgeCheck />
-                    Account
-                  </DropdownMenuItem>
-                </Link>
-              </DropdownMenuGroup>
-              <DropdownMenuItem onClick={() => setIsLogOutOpen(true)}>
-                <LogOutIcon />
-                Log out
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </SidebarMenuItem>
-      </SidebarMenu>
-      <LogOut isOpen={isLogOutOpen} setIsOpen={setIsLogOutOpen} />
-    </>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+          <Avatar className="h-9 w-9">
+            <AvatarFallback>{user.firstName.charAt(0)}</AvatarFallback>
+          </Avatar>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-56" align="end" forceMount>
+        <DropdownMenuLabel className="font-normal">
+          <div className="flex flex-col space-y-1">
+            <p className="text-sm font-medium leading-none">{user.firstName}</p>
+            <p className="text-xs leading-none text-muted-foreground">
+              {user.email}
+            </p>
+          </div>
+        </DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem>Settings</DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={() => logout()}>Log out</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }

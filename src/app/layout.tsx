@@ -1,18 +1,6 @@
-import { Separator } from '@radix-ui/react-separator';
 import type { Metadata } from 'next';
 
-import { AppSidebar } from '@/components/app-sidebar';
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbList,
-  BreadcrumbPage,
-} from '@/components/ui/breadcrumb';
-import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-} from '@/components/ui/sidebar';
+import { NavUser } from '@/components/nav-user';
 import { Toaster } from '@/components/ui/toaster';
 import ReactQueryProvider from '@/providers/react-query';
 
@@ -32,16 +20,22 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning suppressContentEditableWarning>
       <body>
         <ReactQueryProvider>
-          <SidebarProvider>
-            <AppSidebar />
-            <SidebarInset>
-              <header className="sticky top-0 flex h-16 shrink-0 items-center gap-2 border-b bg-background px-4">
-                <SidebarTrigger className="-ml-1" />
-                <Separator orientation="vertical" className="mr-2 h-4" />
-              </header>
-              {children}
-            </SidebarInset>
-          </SidebarProvider>
+          <div className="h-full flex-1 flex-col space-y-8 p-8 flex">
+            <div className="flex items-center justify-between space-y-2">
+              <div>
+                <h2 className="text-2xl font-bold tracking-tight">
+                  Welcome back!
+                </h2>
+                <p className="text-muted-foreground">
+                  Let&apos;s check your previous bills!
+                </p>
+              </div>
+              <div className="flex items-center space-x-2">
+                <NavUser />
+              </div>
+            </div>
+            {children}
+          </div>
           <Toaster />
         </ReactQueryProvider>
       </body>

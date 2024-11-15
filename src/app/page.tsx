@@ -1,31 +1,30 @@
 'use client';
 
-import SessionCard from '@/components/session-card';
-import { HomePageData } from '@/lib/api/user/types/home-page-data';
+import { AnalyticsCard } from '@/components/analytics-card';
+import { columns } from '@/components/table/columns';
+import { DataTable } from '@/components/table/data-table';
+import { Skeleton } from '@/components/ui/skeleton';
 import useGetUserSessionQuery from '@/lib/service/query/user-get-user-session-query';
-
 export default function Page() {
   const { isLoading, data } = useGetUserSessionQuery({ enabled: true });
 
-  return (
+  return isLoading ? (
     <>
-      <div className="flex flex-1 flex-col gap-4 p-4 h-screen">
-        {isLoading || !data ? (
-          <div className="grid auto-rows-min gap-4 md:grid-cols-5">
-            {Array.from({ length: 20 }).map((_, i) => (
-              <div key={i} className="aspect-square rounded-xl bg-muted/50" />
-            ))}
-          </div>
-        ) : (
-          <div className="grid auto-rows-min gap-4 md:grid-cols-5">
-            {data.previous_sessions.map(
-              (session: HomePageData['previous_sessions'][0]) => (
-                <SessionCard key={session.session_name} session={session} />
-              ),
-            )}
-          </div>
-        )}
+      <div className="flex h-12 items-center justify-between">
+        <Skeleton className="h-8 w-24" />
+        <Skeleton className="h-8 w-24" />
       </div>
+      <Skeleton className="h-96 w-full" />
+      <div>
+        <Skeleton className="h-96 w-full" />
+      </div>
+    </>
+  ) : (
+    <>
+      {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+      {/* @ts-expect-error */}
+      <DataTable data={data?.previous_sessions || []} columns={columns} />
+      <AnalyticsCard />
     </>
   );
 }

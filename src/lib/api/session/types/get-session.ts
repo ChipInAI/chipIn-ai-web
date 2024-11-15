@@ -1,13 +1,18 @@
 type GetSessionResponse = {
   session_data: {
-    session_name: string;
-    isClosed: boolean;
-    positions: string[];
-    total_for_person: number;
-    total: number;
-    participants: string[];
+    admin_id: string;
     created_at: string;
-    receipt: string[];
+    isClosed: boolean;
+    participants: string[];
+    positions: {
+      buyer: string;
+      item_name: string;
+      price: number;
+    }[];
+    receipt: string[][];
+    session_name: string;
+    total: number;
+    total_for_person: number;
   };
 };
 

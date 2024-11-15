@@ -70,7 +70,7 @@ export function RegisterForm({
 
   return (
     <Dialog open>
-      <DialogContent className="mx-auto max-w-sm">
+      <DialogContent className="mx-auto max-w-sm" closeButton={false}>
         <DialogHeader>
           <DialogTitle className="text-2xl">Sign up</DialogTitle>
           <DialogDescription>

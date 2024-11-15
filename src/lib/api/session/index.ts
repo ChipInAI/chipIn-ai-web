@@ -6,6 +6,7 @@ import {
   CreateSessionBody,
   CreateSessionResponse,
 } from './types/create-session';
+import { GetAdminResponse } from './types/get-admin';
 import { GetOldSessionsResponse } from './types/get-old-sessions';
 import { GetSessionResponse } from './types/get-session';
 import { ScanImageResponse } from './types/scan-image';
@@ -51,6 +52,14 @@ const SessionAPI = {
   getSession: async (sessionId: string): Promise<GetSessionResponse> => {
     const accessToken = Cookies.get('access_token'); // Using Cookies to get the access token
     const response = await client.get(`/get_session/${sessionId}`, {
+      headers: { 'x-access-token': accessToken },
+    });
+    return response.data;
+  },
+
+  getAdmin: async (sessionId: string): Promise<GetAdminResponse> => {
+    const accessToken = Cookies.get('access_token'); // Using Cookies to get the access token
+    const response = await client.get(`/get_admin/${sessionId}`, {
       headers: { 'x-access-token': accessToken },
     });
     return response.data;
