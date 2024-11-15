@@ -6,15 +6,13 @@ import { useRouter } from 'next/navigation';
 
 import { Button } from '@/components/ui/button';
 
-import { HomePageData } from './data/schema';
-
-interface DataTableRowActionsProps<TData> {
-  row: Row<HomePageData>;
+interface DataTableRowActionsProps<TData extends { _id: string }> {
+  row: Row<TData>;
 }
 
-export function DataTableRowActions<TData>({
+export function DataTableRowActions<TData extends { _id: string }>({
   row,
-}: DataTableRowActionsProps<HomePageData>) {
+}: DataTableRowActionsProps<TData>) {
   const router = useRouter();
   return (
     <Button

@@ -1,13 +1,10 @@
 'use client';
 
-import { useState } from 'react';
 import { Table } from '@tanstack/react-table';
-import { PlusIcon, X } from 'lucide-react';
+import { X } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-
-import { CreateSession } from '../create-session';
 
 import { DataTableViewOptions } from './data-table-options';
 
@@ -19,14 +16,13 @@ export function DataTableToolbar<TData>({
   table,
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0;
-  const [isCreateSessionOpen, setIsCreateSessionOpen] = useState(false);
 
   return (
     <>
       <div className="flex items-center justify-between">
         <div className="flex flex-1 items-center space-x-2">
           <Input
-            placeholder="Filter tasks..."
+            placeholder="Filter by name"
             value={
               (table.getColumn('session_name')?.getFilterValue() as string) ??
               ''
@@ -50,21 +46,9 @@ export function DataTableToolbar<TData>({
           )}
         </div>
         <div className="flex gap-2">
-          <Button
-            size="sm"
-            className="ml-auto hidden h-8 lg:flex"
-            onClick={() => setIsCreateSessionOpen(true)}
-          >
-            <PlusIcon className="mr-2 h-4 w-4" />
-            Create Session
-          </Button>
           <DataTableViewOptions table={table} />
         </div>
       </div>
-      <CreateSession
-        isOpen={isCreateSessionOpen}
-        setIsOpen={setIsCreateSessionOpen}
-      />
     </>
   );
 }
