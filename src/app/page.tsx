@@ -1,9 +1,12 @@
 'use client';
 
+import SessionCard from '@/components/session-card';
+import { HomePageData } from '@/lib/api/user/types/home-page-data';
 import useGetUserSessionQuery from '@/lib/service/query/user-get-user-session-query';
 
 export default function Page() {
   const { isLoading, data } = useGetUserSessionQuery({ enabled: true });
+
   return (
     <>
       <div className="flex flex-1 flex-col gap-4 p-4 h-screen">
@@ -14,8 +17,12 @@ export default function Page() {
             ))}
           </div>
         ) : (
-          <div className="h-full w-full text-center text-muted-foreground flex justify-center items-center text-xl font-medium">
-            {data.previous_sessions.length}
+          <div className="grid auto-rows-min gap-4 md:grid-cols-5">
+            {data.previous_sessions.map(
+              (session: HomePageData['previous_sessions'][0]) => (
+                <SessionCard key={session.session_name} session={session} />
+              ),
+            )}
           </div>
         )}
       </div>
