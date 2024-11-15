@@ -1,12 +1,8 @@
+/* eslint-disable react/prop-types */
 'use client';
 
 import * as React from 'react';
 import * as RechartsPrimitive from 'recharts';
-import {
-  NameType,
-  Payload,
-  ValueType,
-} from 'recharts/types/component/DefaultTooltipContent';
 
 import { cn } from '@/lib/utils';
 
