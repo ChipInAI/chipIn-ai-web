@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { Camera, ImageIcon, Upload } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -28,7 +29,7 @@ export function CreateSession({
     onSuccess: () => {
       setIsOpen(false);
     },
-    onError: error => {
+    onError: () => {
       toast({
         title: 'Error',
         description: 'Error creating session',
@@ -57,6 +58,22 @@ export function CreateSession({
           <DialogDescription>
             Send a photo of your bill to create a session
           </DialogDescription>
+          <div className="grid grid-cols-2 gap-2">
+            <Button
+              variant="secondary"
+              onClick={() => document.getElementById('fileInput')?.click()}
+            >
+              <Camera className="w-4 h-4 mr-2" />
+              Take Photo
+            </Button>
+            <Button
+              variant="secondary"
+              onClick={() => document.getElementById('photo-input')?.click()}
+            >
+              <ImageIcon className="w-4 h-4 mr-2" />
+              Select
+            </Button>
+          </div>
         </DialogHeader>
         <div className="grid gap-4">
           <div className="grid gap-2">
@@ -67,28 +84,24 @@ export function CreateSession({
               className="hidden"
             />
           </div>
-          {file && (
+          {file ? (
             <img
               src={URL.createObjectURL(file)}
               alt="bill"
               className="w-full"
             />
+          ) : (
+            <div className="w-full h-72 bg-muted-foreground/20 rounded-md" />
           )}
         </div>
         <DialogFooter className="flex gap-2 my-2">
           <Button
-            variant="secondary"
-            onClick={() => document.getElementById('photo-input')?.click()}
-            className="flex-1"
-          >
-            Upload Photo
-          </Button>
-          <Button
-            className="flex-1"
             onClick={handleStartSession}
-            disabled={!file || isLoading} // Disable if no file or loading
+            disabled={!file || isLoading}
+            className="flex-1"
           >
-            Start Session
+            <Upload className="w-4 h-4 mr-2" />
+            Upload Photo
           </Button>
         </DialogFooter>
       </DialogContent>

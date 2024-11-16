@@ -1,6 +1,7 @@
 'use client';
 
 import { ColumnDef } from '@tanstack/react-table';
+import { format } from 'date-fns';
 
 import { HomePageData } from '@/components/table/data/schema';
 import { Badge } from '@/components/ui/badge';
@@ -31,7 +32,7 @@ export const columns: ColumnDef<HomePageData>[] = [
       const name = row.getValue('session_name') as string;
 
       const nameParts = name.split(' - ');
-      const formattedTitle = nameParts.length > 1 ? nameParts[2] : name;
+      const formattedTitle = nameParts.length > 2 ? nameParts[2] : name;
 
       return (
         <div className="flex space-x-2">
@@ -44,23 +45,17 @@ export const columns: ColumnDef<HomePageData>[] = [
     },
   },
   {
-    accessorKey: 'session_description',
+    accessorKey: 'created_at',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Description" />
+      <DataTableColumnHeader column={column} title="Date" />
     ),
     cell: ({ row }) => {
-      const name = row.getValue('session_name') as string;
-
-      const nameParts = name.split(' - ');
-      const description =
-        nameParts.length > 1
-          ? `${new Date(nameParts[0]).toLocaleDateString('en-US')} to ${new Date(nameParts[1]).toLocaleDateString('en-US')}`
-          : '';
+      const createdAt = row.getValue('created_at') as string;
 
       return (
         <div className="flex space-x-2">
           <span className="max-w-[500px] truncate font-medium text-muted-foreground">
-            {description}
+            {format(new Date(createdAt), 'MMM d, yyyy')}
           </span>
         </div>
       );

@@ -29,12 +29,14 @@ type HomePageData = {
     divey: number;
     hipster: number;
     intimate: number;
+    image_url: string;
+    restaurant_name: string;
     review_count: number;
     romantic: number;
     stars: number;
     touristy: number;
     trendy: number;
-    upscale: number;
+    upscale: 0;
   }>;
   previous_sessions: Array<{
     _id: string;
