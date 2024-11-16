@@ -9,7 +9,7 @@ type GetSessionResponse = {
       item_name: string;
       price: number;
     }[];
-    receipt: string[][];
+    receipt: [number, string, number][];
     session_name: string;
     total: number;
     total_for_person: number;

@@ -30,7 +30,7 @@ export function CreateSession({
   const { createSession, isLoading } = useCreateSessionUseCase({
     onSuccess: (sessionId: string) => {
       setIsOpen(false);
-      router.push(`/session/${sessionId}`);
+      router.push(`/live/${sessionId}`);
     },
     onError: () => {
       toast({
