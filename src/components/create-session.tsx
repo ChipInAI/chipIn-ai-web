@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Camera, ImageIcon, Upload } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -25,9 +26,11 @@ export function CreateSession({
 }) {
   const [file, setFile] = useState<File | undefined>(undefined);
   const { toast } = useToast();
+  const router = useRouter();
   const { createSession, isLoading } = useCreateSessionUseCase({
-    onSuccess: () => {
+    onSuccess: (sessionId: string) => {
       setIsOpen(false);
+      router.push(`/session/${sessionId}`);
     },
     onError: () => {
       toast({

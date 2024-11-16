@@ -17,45 +17,31 @@ import {
   ChartTooltipContent,
 } from '@/components/ui/chart';
 const chartData = [
-  { date: '2024-04', desktop: 7123, mobile: 2890 }, // Randomized data for April
-  { date: '2024-05', desktop: 8456, mobile: 3678 }, // Randomized data for May
-  { date: '2024-06', desktop: 6345, mobile: 4123 }, // Randomized data for June
-  { date: '2024-07', desktop: 9780, mobile: 5234 }, // Randomized data for July
-  { date: '2024-08', desktop: 7890, mobile: 4567 }, // Randomized data for August
-  { date: '2024-09', desktop: 9100, mobile: 4876 }, // Randomized data for September
-  { date: '2024-10', desktop: 10234, mobile: 5321 }, // Randomized data for October
-  { date: '2024-11', desktop: 11500, mobile: 5980 }, // Randomized data for November
-  { date: '2024-12', desktop: 12345, mobile: 6100 }, // Randomized data for December
-  { date: '2025-01', desktop: 13456, mobile: 6789 }, // Randomized data for January
-  { date: '2025-02', desktop: 14567, mobile: 7000 }, // Randomized data for February
-  { date: '2025-03', desktop: 15678, mobile: 7200 }, // Randomized data for March
-  { date: '2025-04', desktop: 16789, mobile: 7400 }, // Randomized data for April
-  { date: '2025-05', desktop: 17890, mobile: 7600 }, // Randomized data for May
-  { date: '2025-06', desktop: 18901, mobile: 7800 }, // Randomized data for June
-  { date: '2025-07', desktop: 19012, mobile: 8000 }, // Randomized data for July
-  { date: '2025-08', desktop: 20123, mobile: 8200 }, // Randomized data for August
-  { date: '2025-09', desktop: 21234, mobile: 8400 }, // Randomized data for September
-  { date: '2025-10', desktop: 22345, mobile: 8600 }, // Randomized data for October
-  { date: '2025-11', desktop: 23456, mobile: 8800 }, // Randomized data for November
-  { date: '2025-12', desktop: 24567, mobile: 9000 }, // Randomized data for December
+  { date: '2024-04', money_spent: 7123 },
+  { date: '2024-05', money_spent: 8456 },
+  { date: '2024-06', money_spent: 6345 },
+  { date: '2024-08', money_spent: 7890 },
+  { date: '2024-09', money_spent: 9100 },
+  { date: '2025-06', money_spent: 18901 },
+  { date: '2025-07', money_spent: 19012 },
+  { date: '2025-09', money_spent: 21234 },
+  { date: '2025-10', money_spent: 22345 },
+  { date: '2025-11', money_spent: 23456 },
+  { date: '2025-12', money_spent: 24567 },
 ];
 
 const chartConfig = {
   views: {
-    label: 'Page Views',
+    label: 'Money Spent',
   },
-  desktop: {
-    label: 'Desktop',
-    color: 'hsl(var(--chart-2))',
-  },
-  mobile: {
-    label: 'Mobile',
+  money_spent: {
+    label: 'Total bills (£)',
     color: 'hsl(var(--chart-2))',
   },
 } satisfies ChartConfig;
 
 export function AnalyticsCard() {
-  const activeChart = 'desktop';
+  const activeChart = 'money_spent';
 
   return (
     <Card>
@@ -85,8 +71,8 @@ export function AnalyticsCard() {
               dataKey="date"
               tickLine={false}
               axisLine={false}
-              tickMargin={8}
-              minTickGap={32}
+              tickMargin={12}
+              minTickGap={62}
               tickFormatter={value => {
                 const date = new Date(value);
                 return date.toLocaleDateString('en-US', {
@@ -99,7 +85,7 @@ export function AnalyticsCard() {
               content={
                 <ChartTooltipContent
                   className="w-[150px]"
-                  nameKey="views"
+                  nameKey="money_spent"
                   labelFormatter={value => {
                     return new Date(value).toLocaleDateString('en-US', {
                       month: 'short',

@@ -4,7 +4,7 @@ const useCreateSessionUseCase = ({
   onSuccess,
   onError,
 }: {
-  onSuccess?: () => void;
+  onSuccess?: (sessionId: string) => void;
   onError?: (error: unknown) => void;
 }) => {
   const mutation = useCreateSessionMutation();
@@ -13,7 +13,7 @@ const useCreateSessionUseCase = ({
     try {
       const data = await mutation.mutateAsync(file);
 
-      onSuccess?.();
+      onSuccess?.(data.session_id);
 
       return data;
     } catch (error) {
